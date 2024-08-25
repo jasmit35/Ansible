@@ -1,12 +1,13 @@
 #
 [jasmit_com_servers]
-devl ansible_host=enki ansible_port=22 
-test ansible_host=enlil ansible_port=22 
-prod ansible_host=apothiki ansible_port=22
+devl ansible_host=enki
+test ansible_host=enlil
+prod ansible_host=apothiki
 #
 [jasmit_com_servers:vars]
 ansible_user = jeff
 ansible_host = 127.0.0.1
+ansible_port=22 
 ansible_private_key_file = /Users/jeff/.ssh/id_rsa
 #
 [other_servers]

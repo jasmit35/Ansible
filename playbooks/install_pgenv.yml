@@ -1,0 +1,13 @@
+---
+
+- name: Install pgenv
+  hosts: test
+  roles:
+    - role: staticdev.pyenv
+      pyenv_env: "system"
+      pyenv_global:
+        - 3.12.3
+      pyenv_enable_autocompletion: false
+      pyenv_python_versions:
+        - 3.12.3
+...
