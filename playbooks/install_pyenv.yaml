@@ -1,0 +1,19 @@
+---
+
+- name: Install pyenv
+  hosts: "{{ HOSTS }}"
+  roles:
+    - role: staticdev.pyenv
+      vars:
+        pyenv_version: "v2.4.15"  # from https://github.com/pyenv/pyenv/releases
+        pyenv_env: user
+        pyenv_path: "{{ ansible_env.HOME }}/.pyenv"
+        pyenv_enable_autocompletion: false
+        pyenv_global:
+          - 3.12.7
+        pyenv_python_versions:
+          - 3.11.10
+          - 3.12.7
+          - 3.13.0
+
+...

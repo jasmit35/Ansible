@@ -1,0 +1,41 @@
+---
+
+- name: Install my standard Postgres environment
+  hosts: "{{ HOSTS }}"
+  vars:
+    rcpath: "$HOME/.pgenv/.pgenvrc"
+
+  tasks:
+    - name: Clone git repo
+      ansible.builtin.git:
+        repo: https://github.com/theory/pgenv.git
+        dest: ~/.pgenv
+        clone: true
+        version: v1.3.7
+
+    - name: Create rc file to configure pgenv for user
+      ansible.builtin.blockinfile:
+        path: "{{ rcpath }}"
+        block: |
+          #  Provide access to postgres command line utilites
+          export PATH=$HOME/.pgenv/bin:$HOME/.pgenv/pgsql/bin:$PATH
+        state: present
+        create: true
+        mode: u=rwx,g=rw,o=rw
+
+    - name: Modify .bashrc to source the above file
+      ansible.builtin.lineinfile:
+        dest: .bashrc
+        line: "source {{ rcpath }}"
+        state: present
+        create: true
+        mode: u=rwx,g=rw,o=rw
+
+    - name: Build the desired version of Postgres
+      ansible.builtin.command: "pgenv build 15.8"
+      environment:
+        PATH: .pgenv/bin:{{ ansible_env.PATH }}
+      args:
+        creates: ~/.pgenv/pgsql-15.8
+
+...
