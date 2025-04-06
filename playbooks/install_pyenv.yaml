@@ -1,7 +1,13 @@
 ---
 
-- name: Install pyenv
+- name: Maintain python versions 
+
   hosts: "{{ HOSTS }}"
+
+  vars:
+    install_version: 3.13.0
+    remove_version: 3.8.0
+
   roles:
     - role: staticdev.pyenv
       vars:
@@ -12,8 +18,17 @@
         pyenv_global:
           - 3.12.7
         pyenv_python_versions:
-          - 3.11.10
           - 3.12.7
-          - 3.13.0
+
+  tasks:
+    - name: Install python version
+      ansible.builtin.command: "pyenv install {{ install_version }}"
+      args:
+        creates: ~/.pyenv/versions/{{ install_version }}
+
+    - name: Remove python version
+      ansible.builtin.command: "pyenv uninstall {{ remove_version }}"
+      args:
+        removes: ~/.pyenv/versions/{{ remove_version }}
 
 ...

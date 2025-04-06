@@ -1,0 +1,25 @@
+---
+
+- name: Ensure the application group and user id exists
+  become: true
+  gather_facts: false
+  hosts: inanna 
+
+  tasks:
+    - name: Ensure the group 'appgroup' exists
+      ansible.builtin.group:
+        name: appgroup
+        state: present
+        gid: 10000
+
+    - name: Ensure the user 'appuser' exists
+      ansible.builtin.user:
+        name: appuser
+        group: appgroup
+        comment: User with minimal privilages used to run applications
+        state: present
+        shell: /bin/bash
+        uid: 10000
+        hidden: true
+
+...
