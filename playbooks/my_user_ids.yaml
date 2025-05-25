@@ -3,7 +3,7 @@
 - name: Configure my userid the way I like it
   become: true
   gather_facts: false
-  hosts: apothiki
+  hosts: vagrant1 
 
   tasks:
     - name: Ensure the group 'jeff' exists
@@ -19,7 +19,7 @@
         comment: Jeffs standard userid maintained by Ansible
         state: present
         shell: /bin/bash
-        uid: 10003
+        # uid: 10003
         generate_ssh_key: true
         ssh_key_bits: 4096
         ssh_key_file: .ssh/{{ ansible_host }}_rsa
