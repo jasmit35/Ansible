@@ -3,14 +3,14 @@
 - name: Configure my userid the way I like it
   become: true
   gather_facts: false
-  hosts: vagrant1 
+  hosts: test_swarm
 
   tasks:
     - name: Ensure the group 'jeff' exists
       ansible.builtin.group:
         name: jeff
         state: present
-        gid: 10002
+        gid: 10000
 
     - name: Ensure my userid exists
       ansible.builtin.user:
@@ -19,7 +19,7 @@
         comment: Jeffs standard userid maintained by Ansible
         state: present
         shell: /bin/bash
-        # uid: 10003
+        # uid: 10000
         generate_ssh_key: true
         ssh_key_bits: 4096
         ssh_key_file: .ssh/{{ ansible_host }}_rsa

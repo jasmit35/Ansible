@@ -1,14 +1,14 @@
 ---
 
-- name: Ensure my standard group ids are set 
+- name: Ensure my standard group ids are set
   become: true
   gather_facts: false
-  hosts: enki 
+  hosts: prod_swarm
 
   tasks:
     - name: Ensure the group 'jeff' exists
       ansible.builtin.group:
         name: jeff
-        comment: Jeff's group
-        gid: 10000     
+        gid: 10000
         state: present
+...
