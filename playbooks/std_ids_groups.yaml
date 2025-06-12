@@ -3,7 +3,7 @@
 - name: Ensure my standard group ids are set
   become: true
   gather_facts: false
-  hosts: prod_swarm
+  hosts: all 
 
   tasks:
     - name: Ensure the group 'jeff' exists

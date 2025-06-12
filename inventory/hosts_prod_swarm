@@ -1,0 +1,22 @@
+
+prod_swarm:
+  vars:
+    ansible_port: 22
+    ansible_user: jeff 
+    ansible_ssh_private_key_file: /Users/jeff/.ssh/id_rsa
+
+  children:
+    managers:
+      hosts:
+        prod-man-1:
+          ansible_host: babyblue01
+        prod-man-2:
+          ansible_host: babyblue02
+        prod-man-3:
+          ansible_host: babyblue03
+
+    workers:
+      hosts:
+        prod-work-1:
+          ansible_host: babyblue04 
+
