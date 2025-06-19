@@ -1,9 +1,9 @@
 ---
 
-- name: Ensure my standard id is set up and configured
+- name: Ensure my standard id is created and configured
   become: true
   gather_facts: false
-  hosts: test_swarm
+  hosts: all
 
   tasks:
     - name: Ensure the group 'jeff' exists

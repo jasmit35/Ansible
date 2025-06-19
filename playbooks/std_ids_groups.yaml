@@ -3,12 +3,25 @@
 - name: Ensure my standard group ids are set
   become: true
   gather_facts: false
-  hosts: all 
+  hosts: all
 
   tasks:
-    - name: Ensure the group 'jeff' exists
+    - name: Ensure group 'jeff' exists
       ansible.builtin.group:
         name: jeff
         gid: 10000
         state: present
+
+    - name: Ensure group 'appgroup' exists
+      ansible.builtin.group:
+        name: appgroup
+        gid: 20000
+        state: present
+
+    - name: Ensure group 'postgres' exists
+      ansible.builtin.group:
+        name: postgres
+        gid: 30000
+        state: present
+
 ...

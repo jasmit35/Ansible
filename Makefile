@@ -44,4 +44,14 @@ run:
 run-be: 
 	ansible-playbook --ask-become-pass ${PLAYBOOK}
 
+#==========================================================================================
+
+run-in-devl: ## Run playbook in devl; requires PLAYBOOK
+	ansible-playbook -i inventory/devl_swarm.yaml --ask-become-pass ${PLAYBOOK}
+
+run-in-test: ## Run playbook in test; requires PLAYBOOK
+	ansible-playbook -i inventory/test_swarm.yaml --ask-become-pass ${PLAYBOOK}
+
+run-in-prod: 
+	ansible-playbook -i inventory/prod_swarm.yaml --ask-become-pass ${PLAYBOOK}
 
