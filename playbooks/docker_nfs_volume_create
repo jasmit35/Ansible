@@ -1,0 +1,35 @@
+---
+
+- name: Ensure the docker volume encapsolating the NFS shared data exist.
+  become: true
+  gather_facts: false
+  hosts: '{{ HOSTS }}'
+
+  tasks:
+
+    # - name: If volume exist (ok:) otherwise create volume (changed:).
+    #   community.docker.docker_volume:
+    #     debug: false
+    #     name: nfs_volume
+    #     driver: local
+    #     driver_options:
+    #       type: nfs
+    #       o: "addr=192.168.1.70,rw"
+    #       device: :/volume4/NFSStorage
+    #     state: present
+
+    - name: If volume exist (ok:) otherwise create volume (changed:).
+      community.docker.docker_volume:
+        debug: false
+        name: nfs_volume
+        driver: local
+        driver_options:
+          o: bind
+          type: none 
+          device: /Volume/synology_nfs
+        state: present
+
+    #  Sample use:
+    #  make PLAYBOOK=docker_nfs_volume_create HOSTS=localhost, run-on-hosts
+
+...

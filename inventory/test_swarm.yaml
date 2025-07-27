@@ -2,30 +2,29 @@
 test_swarm:
   vars:
     ansible_user: vagrant
-    ansible_host: localhost
 
   children:
     managers:
       hosts:
         manager-1:
           ansible_port: 2222
-          ansible_ssh_private_key_file: /Users/jeff/devl/ansible_swarm/.vagrant/machines/manager-1/virtualbox/private_key
+          ansible_ssh_private_key_file: /Users/jeff/devl/vagrant/test_swarm/.vagrant/machines/test-manager-1/virtualbox/private_key
         manager-2:
           ansible_port: 2200
-          ansible_ssh_private_key_file: /Users/jeff/devl/ansible_swarm/.vagrant/machines/manager-2/virtualbox/private_key
+          ansible_ssh_private_key_file: /Users/jeff/devl/vagrant/test_swarm/.vagrant/machines/test-manager-2/virtualbox/private_key
         manager-3:
           ansible_port: 2201
-          ansible_ssh_private_key_file: /Users/jeff/devl/ansible_swarm/.vagrant/machines/manager-3/virtualbox/private_key
+          ansible_ssh_private_key_file: /Users/jeff/devl/vagrant/test_swarm/.vagrant/machines/test-manager-3/virtualbox/private_key
 
     workers:
       hosts:
-        worker-4:
+        worker-1:
           ansible_port: 2202
-          ansible_ssh_private_key_file: /Users/jeff/devl/ansible_swarm/.vagrant/machines/worker-4/virtualbox/private_key
-        worker-5:
+          ansible_ssh_private_key_file: /Users/jeff/devl/vagrant/test_swarm/.vagrant/machines/test-worker-1/virtualbox/private_key
+        worker-2:
           ansible_port: 2203
-          ansible_ssh_private_key_file: /Users/jeff/devl/ansible_swarm/.vagrant/machines/worker-5/virtualbox/private_key
-        worker-6:
+          ansible_ssh_private_key_file: /Users/jeff/devl/vagrant/test_swarm/.vagrant/machines/test-worker-2/virtualbox/private_key
+        worker-3:
           ansible_port: 2204
-          ansible_ssh_private_key_file: /Users/jeff/devl/ansible_swarm/.vagrant/machines/worker-6/virtualbox/private_key
+          ansible_ssh_private_key_file: /Users/jeff/devl/vagrant/test_swarm/.vagrant/machines/test-worker-3/virtualbox/private_key
 

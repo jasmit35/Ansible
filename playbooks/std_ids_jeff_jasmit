@@ -1,0 +1,54 @@
+---
+
+- name: Ensure my standard user ids are created and configured
+  become: true
+  gather_facts: true 
+  hosts: '{{ HOSTS }}'
+
+  tasks:
+    - name: Ensure the group 'jeff' exists
+      ansible.builtin.group:
+        name: jeff
+        gid: 10000
+        state: present
+
+    - name: Ensure the user 'jeff' exists
+      ansible.builtin.user:
+        name: jeff
+        group: jeff
+        comment: standard userid maintained by Ansible
+        state: present
+        shell: /bin/bash
+        uid: 10000
+        generate_ssh_key: true
+        ssh_key_bits: 4096
+        ssh_key_file: .ssh/{{ ansible_host }}_rsa
+
+    - name: Ensure the user jasmit exists
+      ansible.builtin.user:
+        name: jasmit
+        group: jeff
+        comment: standard userid maintained by Ansible
+        state: present
+        shell: /bin/bash
+        uid: 10001
+        generate_ssh_key: true
+        ssh_key_bits: 4096
+        ssh_key_file: .ssh/{{ ansible_host }}_rsa
+
+    - name: Ensure 'jeff' can run any command without typing 'sudo'
+      community.general.sudoers:
+        commands: ALL
+        name: ALL_jeff
+        user: jeff
+
+    - name: Ensure 'jasmit' can run any command without typing 'sudo'
+      community.general.sudoers:
+        commands: ALL
+        name: ALL_jasmit
+        user: jasmit 
+
+    #  Sample use:
+    #  make PLAYBOOK=std_ids_jeff_jasmit HOSTS=192.168.1.103 run-on-hosts
+
+...

@@ -1,0 +1,16 @@
+---
+
+- name: Ensure the docker volume encapsolating the NFS shared data exist.
+  become: true
+  gather_facts: false
+  hosts: '{{ HOSTS }}'
+
+  tasks:
+
+    - name: If volume exist (ok:) otherwise create volume (changed:).
+      community.docker.docker_volume:
+        debug: false
+        name: nfs_volume
+        state: absent
+
+...

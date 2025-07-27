@@ -1,0 +1,30 @@
+[vagrant_cluster]
+vagrant1 ansible_host=localhost ansible_port=2222 ansible_user=vagrant
+vagrant2 ansible_host=localhost ansible_port=2200 ansible_user=vagrant
+vagrant3 ansible_host=localhost ansible_port=2201 ansible_user=vagrant
+
+[devl_swarm]
+devl-manager-1 ansible_host=localhost ansible_port=2222 ansible_user=vagrant ansible_ssh_private_key_file=/Users/jeff/devl/vagrant/devl_swarm/.vagrant/machines/devl-manager-1/virtualbox/private_key
+devl-worker-1 ansible_host=localhost ansible_port=2200 ansible_user=vagrant ansible_ssh_private_key_file=/Users/jeff/devl/vagrant/devl_swarm/.vagrant/machines/devl-worker-1/virtualbox/private_key
+devl-worker-2 ansible_host=localhost ansible_port=2201 ansible_user=vagrant ansible_ssh_private_key_file=/Users/jeff/devl/vagrant/devl_swarm/.vagrant/machines/devl-worker-2/virtualbox/private_key
+
+[test_swarm]
+test-manager-1 ansible_host=localhost ansible_port=2222 ansible_user=vagrant ansible_ssh_private_key_file=/Users/jeff/devl/vagrant/test_swarm/.vagrant/machines/test-manager-1/virtualbox/private_key
+test-manager-2 ansible_host=localhost ansible_port=2200 ansible_user=vagrant ansible_ssh_private_key_file=/Users/jeff/devl/ansible_swarm/.vagrant/machines/manager-2/virtualbox/private_key
+test-manager-3 ansible_host=localhost ansible_port=2201 ansible_user=vagrant ansible_ssh_private_key_file=/Users/jeff/devl/ansible_swarm/.vagrant/machines/manager-3/virtualbox/private_key
+test-worker-4 ansible_host=localhost ansible_port=2202 ansible_user=vagrant ansible_ssh_private_key_file=/Users/jeff/devl/ansible_swarm/.vagrant/machines/worker-4/virtualbox/private_key
+test-worker-5 ansible_host=localhost ansible_port=2203 ansible_user=vagrant ansible_ssh_private_key_file=/Users/jeff/devl/ansible_swarm/.vagrant/machines/worker-5/virtualbox/private_key
+test-worker-6 ansible_host=localhost ansible_port=2204 ansible_user=vagrant ansible_ssh_private_key_file=/Users/jeff/devl/ansible_swarm/.vagrant/machines/worker-6/virtualbox/private_key
+
+[prod_swarm]
+prod-man-1 ansible_host=babyblue01 ansible_user=jasmit ansible_ssh_private_key_file=/Users/jeff/.ssh/id_rsa
+prod-man-2 ansible_host=babyblue02 ansible_user=jasmit ansible_ssh_private_key_file=/Users/jeff/.ssh/id_rsa
+prod-man-3 ansible_host=babyblue03 ansible_user=jasmit ansible_ssh_private_key_file=/Users/jeff/.ssh/id_rsa
+prod-work-1 ansible_host=babyblue04 ansible_user=jasmit ansible_ssh_private_key_file=/Users/jeff/.ssh/id_rsa
+
+[other]
+enki ansible_host=localhost ansible_user=jeff ansible_ssh_private_key_file=/Users/jeff/.ssh/id_rsa
+independence ansible_host=independence ansible_user=jasmit ansible_ssh_private_key_file=/Users/jeff/.ssh/id_rsa
+# explorer     ansible_host=explorer     ansible_user=jasmit ansible_ssh_private_key_file=/Users/jeff/.ssh/id_rsa
+explorer     ansible_host=explorer     ansible_user=jeff ansible_password=House!5
+

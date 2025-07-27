@@ -1,5 +1,5 @@
 #
-#
+#  Inventory file for the development Vagrant / Docker Swarm
 #
 devl_swarm:
   vars:

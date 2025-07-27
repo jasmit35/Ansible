@@ -1,0 +1,13 @@
+
+prod:
+  vars:
+    ansible_port: 22
+    ansible_user: jeff 
+    ansible_ssh_private_key_file: /Users/jeff/.ssh/id_rsa
+
+    hosts:
+      independence:
+          ansible_host: independence.local
+          ansible_user: fred
+          ansible_password: Trick6!!! 
+

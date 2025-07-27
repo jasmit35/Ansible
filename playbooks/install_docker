@@ -1,0 +1,71 @@
+---
+
+- name: InstallDocker
+  become: true
+  gather_facts: true
+  hosts: '{{ HOSTS }}'
+
+  tasks:
+
+    - name: Update Apt Cache
+      apt:
+        update_cache: true
+
+    - name: Remove posible conflicting legacy packages
+      apt:
+        name:
+          - docker.io
+          - docker-compose
+          - docker-doc
+          - podman-docker
+        state: absent
+
+    - name: Remove other possible leftovers
+      shell: >
+        sudo rm -rf /var/lib/docker
+        sudo rm -rf /var/lib/containerd
+      changed_when: false
+
+    - name: Install Prerequisites
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg-agent
+          - software-properties-common
+        state: present
+
+    - name: Add Docker GPG Key
+      ansible.builtin.apt_key:
+        url: https://download.docker.com/linux/debian/gpg
+        state: present
+
+    - name: Add Docker Repo
+      ansible.builtin.apt_repository:
+        repo: "deb [arch=amd64, signed-by=/etc/apt/keyrings/docker.asc] \
+        https://download.docker.com/linux/debian bookworm stable"
+        update_cache: true
+        validate_certs: false
+        state: present
+
+    - name: Install Docker Community Edition
+      apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
+        state: present
+        update_cache: true
+
+    - name: Start and enable Docker
+      service:
+        name: docker
+        state: started
+
+
+  #  Sample
+  #  make PLAYBOOK=install_docker HOSTS=independence, run-on-hosts
+...

@@ -2,8 +2,12 @@
 
 - name: Ping servers to confirm their up
   become: false
+  hosts: '{{ HOSTS }}' 
   tasks:
     - name: Ping em
       ansible.builtin.ping:
+
+  #  Sample use:
+  #  make PLAYBOOK=ping HOSTS=enki, run-on-hosts
 
 ...
