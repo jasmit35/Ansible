@@ -2,7 +2,7 @@
 
 - name: InstallDocker
   become: true
-  gather_facts: true 
+  gather_facts: true
   hosts: '{{ HOSTS }}'
 
   tasks:
@@ -46,7 +46,7 @@
         suites: ["{{ ansible_distribution_release | lower }}"]
         components: [stable]
         state: present
-        enabled: true 
+        enabled: true
 
     - name: Install Docker Community Edition
       apt:
@@ -63,6 +63,13 @@
       service:
         name: docker
         state: started
+
+    - name: Create our standard Docker network
+      community.docker.docker_network:
+        name: pi_docker_network
+        ipam_config:
+          - subnet: 172.30.1.0/24
+
 
   #  Sample
   #  make PLAYBOOK=install_docker HOSTS=independence, run-on-hosts

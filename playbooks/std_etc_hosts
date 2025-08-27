@@ -1,0 +1,23 @@
+---
+
+- name: Deploy the standard template for /etc/hosts 
+  become: true
+  gather_facts: true
+  hosts: '{{ HOSTS }}'
+
+  tasks:
+
+    - name: Deploy 
+      ansible.builtin.template:
+        backup: true
+        src: ~/ansible/files/etc_host.j2
+        dest: /etc/hosts
+        owner: root
+        group: root
+        mode: 0644
+
+
+  #  Sample use:
+  #  make PLAYBOOK=std_etc_hosts HOSTS=prod_swarm, run-on-hosts
+
+...

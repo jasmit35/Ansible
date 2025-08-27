@@ -1,0 +1,96 @@
+---
+
+- name: Postgres installation playbook
+  hosts: apothiki
+  gather_facts: true
+
+  vars:
+    postgres_version: "15"
+    postgres_bin_path: "/usr/lib/postgresql/{{ postgres_version }}/bin"
+    postgres_data_dir: "/mnt/postgres/{{ postgres_version }}"
+    # ansible_ssh_pipelining: true
+
+  tasks:
+    #
+    #  Set up the postgres user account first
+    #
+    - name: Ensure the group 'postgres' exists
+      become: true
+      ansible.builtin.group:
+        name: postgres
+        state: present
+        gid: 10001
+
+    - name: Ensure the user 'postgres' exists
+      become: true
+      ansible.builtin.user:
+        name: postgres
+        group: postgres
+        comment: Postgres software owner
+        state: present
+        shell: /bin/bash
+        uid: 10002
+        hidden: true
+
+    - name: Setup bash_profile for postgres user
+      become: true
+      ansible.builtin.template:
+        src: bash_profile.j2
+        dest: ~postgres/.bash_profile
+        owner: postgres
+        group: postgres
+        mode: '0750'
+    #
+    #  Set up the server ...
+    #
+    - name: Insure required packages are present
+      become: true
+      ansible.builtin.apt:
+        name:
+          - postgresql
+          - postgresql-contrib
+          - libpq-dev
+          - python3-psycopg2
+        state: present
+    #
+    #  Insure the file system is set up correctly for PGDATA ...
+    #
+    - name: Insure directory ownership
+      become: true
+      ansible.builtin.file:
+        path: "{{ postgres_data_dir }}"
+        state: directory
+        group: postgres
+        owner: postgres
+        mode: '0750'
+    #
+    #  Insure postgres has been INIT'ed ...
+    #
+    - name: Check if postgre is initialized
+      become: true
+      ansible.builtin.stat:
+        path: "{{ postgres_data_dir }}/pg_hba.conf"
+      register: postgres_is_init
+
+    - name: If not initialized do so
+      when: not postgres_is_init.stat.exists
+      become: true
+      become_user: postgres
+      ansible.builtin.command:
+        "{{ postgres_bin_path }}/initdb -D {{ postgres_data_dir }}"
+      register: postgres_is_init
+      changed_when: postgres_is_init.rc != 0
+    #
+    #  Set postgres service to start at boot time
+    #
+    - name: Make sure postgres service is enabled
+      ansible.builtin.systemd_service:
+        name: postgresql
+        enabled: true
+
+    - name: Make sure a service unit is running
+      ansible.builtin.systemd_service:
+        name: postgresql
+        state: started
+
+...

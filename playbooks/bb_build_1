@@ -1,23 +1,43 @@
 ---
 
-- name: Configure userids the way I like
+- name: Perform the standard
   become: true
-  gather_facts: false
+  gather_facts: true
   hosts: '{{ HOSTS }}'
 
   tasks:
 
-    - name: Ensure 'jasmit' exists
-      ansible.builtin.user:
-        name: jasmit
-        group: jeff
-        comment: standard userid maintained by Ansible
+    - name: Update all packages to their latest version
+      ansible.builtin.apt:
+        name: "*"
+        update_cache: true
+        state: latest
+
+    - name: Autoremove
+      ansible.builtin.apt:
+        autoremove: true
+
+    - name: Clean leftovers
+      ansible.builtin.apt:
+        clean: true
+
+    - name: Ensure group 'jeff' exists
+      ansible.builtin.group:
+        name: jeff
+        gid: 10000
         state: present
-        shell: /bin/bash
-        uid: 10001
-        generate_ssh_key: true
-        ssh_key_bits: 4096
-        ssh_key_file: .ssh/{{ ansible_host }}_rsa
+
+    - name: Ensure group 'appgroup' exists
+      ansible.builtin.group:
+        name: appgroup
+        gid: 20000
+        state: present
+
+    - name: Ensure group 'postgres' exists
+      ansible.builtin.group:
+        name: postgres
+        gid: 30000
+        state: present
 
     - name: Ensure 'postgres' exists
       ansible.builtin.user:

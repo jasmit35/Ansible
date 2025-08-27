@@ -1,0 +1,39 @@
+---
+
+- name: Encrypt a device
+  become: true
+  gather_facts: false
+  hosts: '{{ HOSTS }}'
+
+  vars:
+    encrypt_device: /dev/sda1
+    encrypt_phrase: "FredBeDead321"
+    encrypt_mapper: "crypt_data"
+
+  tasks:
+
+    - name: Install the crypto software
+      ansible.builtin.apt:
+        update_cache: true
+        pkg:
+          - cryptsetup
+          - cryptsetup-initramfs
+
+    - name: Create LUKS container with a passphrase
+      community.crypto.luks_device:
+        device: "{{ encrypt_device }}"
+        passphrase: "{{ encrypt_phrase }}"
+        state: "present"
+
+    - name: Open the LUKS container and give it a name in "mapper"
+      community.crypto.luks_device:
+        device: "{{ encrypt_device }}"
+        passphrase: "{{ encrypt_phrase }}"
+        name: "{{ encrypt_mapper }}"
+        state: "opened"
+
+
+    #  Sample use:
+    #  make PLAYBOOK=bb_build_2 HOSTS=prod-man-1, run-on-hosts
+
+...

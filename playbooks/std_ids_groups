@@ -1,11 +1,12 @@
 ---
 
-- name: Ensure my standard group ids are set
+- name: Ensure the standard group ids are set
   become: true
   gather_facts: false
-  hosts: '{{ HOSTS }}' 
+  hosts: '{{ HOSTS }}'
 
   tasks:
+
     - name: Ensure group 'jeff' exists
       ansible.builtin.group:
         name: jeff
@@ -23,5 +24,9 @@
         name: postgres
         gid: 30000
         state: present
+
+
+    #  Sample use:
+    #  make PLAYBOOK=std_ids_groups HOSTS=enki, run-on-hosts
 
 ...

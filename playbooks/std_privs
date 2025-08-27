@@ -1,0 +1,22 @@
+---
+
+- name: Configure userids with their standard privialges
+  become: true
+  gather_facts: true
+  hosts: '{{ HOSTS }}'
+
+  tasks:
+
+    - name: Allow jasmit to have passwordless sudo as a convenience
+      ansible.builtin.lineinfile:
+        dest: /etc/sudoers.d/jasmit_sudo
+        create: true
+        line: 'jasmit ALL=(ALL) NOPASSWD: ALL'
+        state: present
+        validate: 'visudo -cf %s'
+
+
+  #  Sample use:
+  #  make PLAYBOOK=std_privs HOSTS=apothiki, run-on-hosts
+
+...
