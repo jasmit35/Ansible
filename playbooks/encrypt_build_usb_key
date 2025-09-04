@@ -1,0 +1,43 @@
+---
+
+- name: Create a file on a USB and use it as an encrytion key
+  become: true
+  gather_facts: true
+  hosts: '{{ HOSTS }}'
+
+  vars:
+
+    usb_device:     '/dev/sdb1'
+    usb_mount_path: '/mnt/usbkey'
+    usb_key_file:   '/mnt/usbkey/key_file'
+
+    encrypt_device: '/dev/sda1'
+    encrypt_phrase: 'FredBeDead321'
+
+  tasks:
+
+    - name: Mount USB on mount point, add fstab entry
+      ansible.posix.mount:
+        src:    '{{ usb_device }}'
+        path:   '{{ usb_mount_path }}'
+        fstype: 'ext4'
+        state:  'mounted'
+
+    - name: Use 4096 random bytes as the key
+      community.general.filesize:
+        source: '/dev/urandom'
+        path:   '{{ usb_key_file }}'
+        size:   '4096B'
+        mode:   '0400'
+
+    - name: Add new key for encrypted device
+      community.crypto.luks_device:
+        device:      '{{ encrypt_device }}'
+        passphrase:  '{{ encrypt_phrase }}'
+        new_keyfile: '{{ usb_key_file }}'
+
+
+#  Sample use:
+#  make PLAYBOOK=encrypt_build_usb_key HOSTS=prod-man-1 run-on-hosts
+
+...

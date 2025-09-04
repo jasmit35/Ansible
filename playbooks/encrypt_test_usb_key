@@ -1,0 +1,59 @@
+---
+
+- name: Build USB key
+  become: true
+  gather_facts: false
+  hosts: '{{ HOSTS }}'
+
+  vars:
+    usb_device: /dev/sdb1
+    usb_mount_path: "/mnt/usbkey"
+    usb_key_file: "/mnt/usbkey/key_file"
+    encrypt_device: "/dev/sda1"
+    encrypt_phrase: "FredBeDead321"
+    # encrypt_mapper: "/dev/mapper/{{ encrypt_name }}"
+
+
+  tasks:
+
+    - name: Mount the USB on the mount point
+      ansible.posix.mount:
+        src: "{{ usb_device }}"
+        path: "{{ usb_mount_path }}"
+        fstype: ext4
+        state: mounted
+
+    - name: Create key file with random bytes for use with the LUKS device
+      community.general.filesize:
+        source: /dev/urandom
+        path: '{{ usb_key_file }}'
+        size: 4096B
+        mode: '0400'
+
+    - name: Add new key to LUKS device
+      community.crypto.luks_device:
+        device: '{{ encrypt_device }}'
+        passphrase: '{{ encrypt_phrase }}'
+        new_keyfile: '{{ usb_key_file }}'
+
+    - name: Unmount the encrypted storage 
+      ansible.posix.mount:
+        path: /mnt/storage
+        state: unmounted
+
+    - name: Close the existing LUKS container 
+      community.crypto.luks_device:
+        name: "crypt-data"
+        state: "closed"
+
+    - name: Add new key to the LUKS container 
+      community.crypto.luks_device:
+        device: '{{ encrypt_device }}' 
+        passphrase: '{{ encrypt_phrase }}'
+        new_keyfile: '{{ usb_key_file }}' 
+
+
+    #  Sample use:
+    #  make PLAYBOOK=build_usb_key HOSTS=prod-man-1, run-on-hosts
+
+...

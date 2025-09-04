@@ -2,13 +2,15 @@
 
 - name: Encrypt a device
   become: true
-  gather_facts: false
+  gather_facts: true
   hosts: '{{ HOSTS }}'
 
   vars:
     encrypt_device: /dev/sda1
     encrypt_phrase: "FredBeDead321"
-    encrypt_mapper: "crypt_data"
+    encrypt_name: "crypt_data"
+    encrypt_mapper: "/dev/mapper/{{ encrypt_name }}"
+    encrypt_mount_path: "/mnt/storage"
 
   tasks:
 
@@ -29,11 +31,23 @@
       community.crypto.luks_device:
         device: "{{ encrypt_device }}"
         passphrase: "{{ encrypt_phrase }}"
-        name: "{{ encrypt_mapper }}"
+        name: "{{ encrypt_name }}"
         state: "opened"
+
+    - name: Create a ext4 filesystem on the device
+      community.general.filesystem:
+        fstype: ext4
+        dev: "{{ encrypt_mapper }}"
+
+    - name: Mount the encrypted storage on the mount point
+      ansible.posix.mount:
+        src: "{{ encrypt_mapper }}"
+        path: "{{ encrypt_mount_path }}"
+        fstype: ext4
+        state: mounted
 
 
     #  Sample use:
-    #  make PLAYBOOK=bb_build_2 HOSTS=prod-man-1, run-on-hosts
+    #  make PLAYBOOK=encrypt_a_device HOSTS=prod-man-1, run-on-hosts
 
 ...
