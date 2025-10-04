@@ -89,6 +89,6 @@
 
 
     #  Sample use:
-    #  make PLAYBOOK=std_ids_users HOSTS=enki, run-on-hosts
+    #  make PLAYBOOK=bb_build_1 HOSTS=prod_swarm, run-on-hosts
 
 ...
