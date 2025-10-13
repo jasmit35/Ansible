@@ -1,0 +1,28 @@
+---
+
+- name: Perform task to prepare for the installation
+  become: true
+  gather_facts: true
+  hosts: '{{ HOSTS }}'
+
+  tasks:
+
+    - name: Update all packages to their latest version
+      ansible.builtin.apt:
+        name: "*"
+        update_cache: true
+        state: latest
+
+    - name: Autoremove
+      ansible.builtin.apt:
+        autoremove: true
+
+    - name: Clean leftovers
+      ansible.builtin.apt:
+        clean: true
+
+
+    #  Sample use:
+    #  make PLAYBOOK=pre_install HOSTS=prod_swarm, run-on-hosts
+
+...

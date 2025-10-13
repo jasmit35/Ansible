@@ -7,17 +7,17 @@
 
   tasks:
 
-    - name: Ensure 'jasmit' exists
-      ansible.builtin.user:
-        name: jasmit
-        group: jeff
-        comment: standard userid maintained by Ansible
-        state: present
-        shell: /bin/bash
-        uid: 10001
-        generate_ssh_key: true
-        ssh_key_bits: 4096
-        ssh_key_file: .ssh/{{ ansible_host }}_rsa
+    # - name: Ensure 'jasmit' exists
+    #   ansible.builtin.user:
+    #     name: jasmit
+    #     group: jeff
+    #     comment: standard userid maintained by Ansible
+    #     state: present
+    #     shell: /bin/bash
+    #     uid: 10001
+    #     generate_ssh_key: true
+    #     ssh_key_bits: 4096
+    #     ssh_key_file: .ssh/{{ ansible_host }}_rsa
 
     - name: Ensure 'postgres' exists
       ansible.builtin.user:

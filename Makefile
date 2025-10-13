@@ -28,7 +28,7 @@ syntax-check:
 .PHONY: ansible-lint
 ansible-lint:
 	printf "\n🚀    Performing ansible linting...\n"
-	/opt/homebrew/bin/ansible-lint playbooks/${PLAYBOOK}
+	/opt/homebrew/bin/ansible-lint playbooks/${PLAYBOOK} 
 	if [ $$? -eq 0 ]; \
 	then \
 		printf "      ansible linting successful!\n"; \

@@ -8,11 +8,11 @@
   tasks:
 
     - name: Update Apt Cache
-      apt:
+      ansible.builtin.apt:
         update_cache: true
 
     - name: Remove posible conflicting legacy packages
-      apt:
+      ansible.builtin.apt:
         name:
           - docker.io
           - docker-compose
@@ -21,13 +21,13 @@
         state: absent
 
     - name: Remove other possible leftovers
-      shell: >
+      ansible.builtin.shell: >
         sudo rm -rf /var/lib/docker
         sudo rm -rf /var/lib/containerd
       changed_when: false
 
     - name: Install Prerequisites
-      apt:
+      ansible.builtin.apt:
         name:
           - apt-transport-https
           - ca-certificates
@@ -49,7 +49,7 @@
         enabled: true
 
     - name: Install Docker Community Edition
-      apt:
+      ansible.builtin.apt:
         name:
           - docker-ce
           - docker-ce-cli
@@ -60,7 +60,7 @@
         update_cache: true
 
     - name: Start and enable Docker
-      service:
+      ansible.builtin.service:
         name: docker
         state: started
 
@@ -72,5 +72,5 @@
 
 
   #  Sample
-  #  make PLAYBOOK=install_docker HOSTS=independence, run-on-hosts
+  #  make PLAYBOOK=install_docker.yaml HOSTS=prod_swarm, run-on-hosts
 ...

@@ -1,0 +1,28 @@
+---
+
+- name: Perform the normal apt update / upgrade process
+  become: true
+  gather_facts: false
+  hosts: '{{ HOSTS }}'
+
+  tasks:
+
+    - name: Update all packages to their latest version
+      ansible.builtin.apt:
+        name: "*"
+        update_cache: true
+        state: latest
+
+    - name: Autoremove
+      ansible.builtin.apt:
+        autoremove: true
+
+    - name: Clean leftovers
+      ansible.builtin.apt:
+        clean: true
+
+
+    #  Sample use:
+    #  make PLAYBOOK=apt_upgrade.yaml HOSTS=prod_swarm, run-on-hosts
+
+...
