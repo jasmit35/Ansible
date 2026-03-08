@@ -21,6 +21,21 @@
       ansible.builtin.apt:
         clean: true
 
+    - name: Get listing of unneeded files
+      ansible.builtin.find:
+        path: '/var/lib/apt/lists'
+        file_type: any
+        hidden: true
+      register: directory_content
+
+    - name: Remove the unneeded files we foung
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: absent
+      with_items: "{{ directory_content.files }}"
+      loop_control:
+        label: "{{ item.path }}"
+
 
     #  Sample use:
     #  make PLAYBOOK=apt_upgrade.yaml HOSTS=prod_swarm, run-on-hosts

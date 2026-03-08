@@ -10,7 +10,7 @@
     - name: Deploy
       ansible.builtin.template:
         backup: true
-        src: ~/devl/ansible/files/etc_hosts.j2
+        src: /Users/jeff/devl/other_computer_projects/ansible/files/etc_hosts.j2
         dest: /etc/hosts
         owner: root
         group: root

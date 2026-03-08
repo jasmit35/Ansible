@@ -33,7 +33,6 @@
           - ca-certificates
           - curl
           - gnupg-agent
-          - software-properties-common
           - python3-debian
         state: present
 

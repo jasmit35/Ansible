@@ -59,5 +59,5 @@ run-on-independence:
 	ansible-playbook -i independence, --ask-become-pass ${PLAYBOOK}
 
 run-on-hosts:
-	ansible-playbook -i inventory/hosts --extra-vars "HOSTS=${HOSTS}" --ask-become-pass playbooks/${PLAYBOOK}
+	ansible-playbook -i inventory/hosts --extra-vars "HOSTS=${HOSTS}" --ask-become-pass playbooks/${PLAYBOOK} 
 

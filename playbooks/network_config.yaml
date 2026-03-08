@@ -1,0 +1,17 @@
+---
+
+- name: network configuration
+  hosts: massah.local 
+  tasks:
+     - name: configure NIC
+       nmcli:
+          conn_name: ens38
+          ifname: ens38
+          ip4: 192.168.72.73/24
+          gw4: 192.168.72.2
+          dns4:
+             - 192.168.72.2
+             - 8.8.8.8
+          state: present
+          autoconnect: yes
+          type: ethernet
