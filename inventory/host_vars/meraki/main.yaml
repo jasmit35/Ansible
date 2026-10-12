@@ -1,0 +1,26 @@
+---
+
+vault_become_pass: "{{ vault_become_pass }}"
+
+
+shared_storage:
+
+    volume_group: 'vg.nvme'
+    logical_volume: 'lv1.share'
+    lv_device: '/dev/mapper/vg.nvme-lv1.share'
+    lv_mount_point: '/mnt/shared_storage'
+
+secure_storage:
+
+    usb_key_device: '/dev/sdc1'
+    usb_mount_point: '/mnt/usbkey'
+
+    volume_group: 'vg.nvme'
+    logical_volume: 'lv2.secure'
+    lv_device: '/dev/mapper/vg.nvme-lv2.secure'
+
+    container_name: 'crypt_data'
+    container_device: '/dev/mapper/crypt_data'
+    container_mount_point: '/mnt/secure_storage'
+
+...

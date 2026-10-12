@@ -5,7 +5,12 @@ test_swarm:
   hosts:
 
     test-swarm-manager-1:
-      ansible_host: 
+      ansible_host: 192.168.1.6 
+      ansible_user: vagrant
+
+    test-swarm-manager-2:
+      ansible_host: 192.168.1.7 
+      ansible_user: vagrant
 
 prod_swarm:
 
@@ -29,6 +34,16 @@ prod_swarm:
     prod-work-1:
       ansible_host: babyblue04
       ansible_user: jasmit
+      ansible_ssh_private_key_file: /Users/jeff/.ssh/id_rsa
+
+misc_servers:
+
+  hosts:
+
+    meraki:
+      ansible_host: meraki
+      ansible_user: jasmit
+      # ansible_ssh_pass: House!5
       ansible_ssh_private_key_file: /Users/jeff/.ssh/id_rsa
 
 ...

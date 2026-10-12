@@ -1,3 +1,6 @@
 
 .ansible
 
+**/vault.yml
+**/vault.yaml
+

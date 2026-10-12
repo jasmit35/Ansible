@@ -1,0 +1,25 @@
+---
+
+#
+#  Inventory file for the development Vagrant / Docker Swarm
+#
+
+devl_swarm:
+  vars:
+    ansible_user: vagrant
+    ansible_password: vagrant
+
+  children:
+    managers:
+      hosts:
+        devl-swarm-manager-1:
+          ansible_host: 192.168.1.2
+
+    workers:
+      hosts:
+        devl-swarm-worker-1:
+          ansible_host: 192.168.1.3
+        devl-swarm-worker-2:
+          ansible_host: 192.168.1.4
+
+...

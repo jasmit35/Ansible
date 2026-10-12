@@ -1,0 +1,22 @@
+
+test_swarm:
+  vars:
+    ansible_user: vagrant
+    ansible_password: vagrant
+    ansible_python_interpreter: /usr/bin/python3
+
+  children:
+    managers:
+      hosts:
+        test-swarm-manager-1:
+          ansible_host: 192.168.1.6
+        test-swarm-manager-2:
+          ansible_host: 192.168.1.7
+        test-swarm-manager-3:
+          ansible_host: 192.168.1.8
+
+    workers:
+      hosts:
+        test-swarm-worker-1:
+          ansible_host: 192.168.1.9
+

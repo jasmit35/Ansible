@@ -1,0 +1,27 @@
+---
+
+prod_swarm:
+
+  hosts:
+
+    prod-swarm-manager-1:
+      ansible_host: babyblue01
+      ansible_user: jasmit
+      ansible_ssh_private_key_file: /Users/jeff/.ssh/id_rsa
+
+    prod-swarm-manager-2:
+      ansible_host: babyblue02
+      ansible_user: jasmit
+      ansible_ssh_private_key_file: /Users/jeff/.ssh/id_rsa
+
+    prod-swarm-manager-3:
+      ansible_host: babyblue03
+      ansible_user: jasmit
+      ansible_ssh_private_key_file: /Users/jeff/.ssh/id_rsa
+
+    prod-swarm-worker-1:
+      ansible_host: babyblue04
+      ansible_user: jasmit
+      ansible_ssh_private_key_file: /Users/jeff/.ssh/id_rsa
+
+...
