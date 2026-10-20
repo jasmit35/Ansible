@@ -1,0 +1,11 @@
+---
+
+#  Varables for host prod-man-1 
+
+networking:
+
+    ansible_end0: end0
+    ansible_interface_name: end0
+    interface_name: end0
+
+...

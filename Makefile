@@ -1,6 +1,11 @@
 ################################################################################
 #  Setup
-include env
+include Makefile_env
+
+#-------------------------------------------------------------------------------
+
+install-docker: ## Install Docker (standalone server) 
+	sudo ansible-playbook playbooks/install_docker.yaml -e HOSTS=${hosts}
 
 #-------------------------------------------------------------------------------
 

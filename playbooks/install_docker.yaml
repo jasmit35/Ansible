@@ -11,6 +11,7 @@
       ansible.builtin.apt:
         update_cache: true
 
+
     - name: Remove posible conflicting legacy packages
       ansible.builtin.apt:
         name:
@@ -20,11 +21,24 @@
           - podman-docker
         state: absent
 
-    - name: Remove other possible leftovers
-      ansible.builtin.shell: >
-        sudo rm -rf /var/lib/docker
-        sudo rm -rf /var/lib/containerd
-      changed_when: false
+
+    - name: Remove any existing docker log directory
+      ansible.builtin.file:
+        path: /var/lib/docker
+        state: absent
+
+
+    - name: Remove any existing containerd log directory
+      ansible.builtin.file:
+        path: /var/lib/containerd
+        state: absent
+
+
+    #  - name: Remove other possible leftovers
+    #    ansible.builtin.shell: >
+    #      sudo rm -rf /var/lib/docker
+    #      sudo rm -rf /var/lib/containerd
+    #    changed_when: false
 
     - name: Install Prerequisites
       ansible.builtin.apt:

@@ -1,0 +1,6 @@
+#
+#  Environment varables for the Makefile in the Ansible project
+#
+
+hosts = 'prod_swarm'
+

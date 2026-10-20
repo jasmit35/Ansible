@@ -1,27 +1,43 @@
 ---
 
+#  Inventory file for the Production Docker Swarm
+
 prod_swarm:
 
-  hosts:
+  vars:
 
-    prod-swarm-manager-1:
-      ansible_host: babyblue01
-      ansible_user: jasmit
-      ansible_ssh_private_key_file: /Users/jeff/.ssh/id_rsa
+    ansible_port: 22
+    ansible_user: jasmit
+    ansible_ssh_private_key_file: /Users/jeff/.ssh/id_rsa
 
-    prod-swarm-manager-2:
-      ansible_host: babyblue02
-      ansible_user: jasmit
-      ansible_ssh_private_key_file: /Users/jeff/.ssh/id_rsa
+  children:
 
-    prod-swarm-manager-3:
-      ansible_host: babyblue03
-      ansible_user: jasmit
-      ansible_ssh_private_key_file: /Users/jeff/.ssh/id_rsa
+    managers:
 
-    prod-swarm-worker-1:
-      ansible_host: babyblue04
-      ansible_user: jasmit
-      ansible_ssh_private_key_file: /Users/jeff/.ssh/id_rsa
+      hosts:
+
+        prod-man-1:
+          ansible_host: babyblue01
+          ansible_user: jasmit
+          ansible_ssh_private_key_file: /Users/jeff/.ssh/id_rsa
+
+        prod-man-2:
+          ansible_host: babyblue02
+          ansible_user: jasmit
+          ansible_ssh_private_key_file: /Users/jeff/.ssh/id_rsa
+
+        prod-man-3:
+          ansible_host: babyblue03
+          ansible_user: jasmit
+          ansible_ssh_private_key_file: /Users/jeff/.ssh/id_rsa
+
+    workers:
+
+      hosts:
+
+        prod-work-1:
+          ansible_host: babyblue04
+          ansible_user: jasmit
+          ansible_ssh_private_key_file: /Users/jeff/.ssh/id_rsa
 
 ...

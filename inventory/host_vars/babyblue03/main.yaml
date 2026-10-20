@@ -1,0 +1,34 @@
+---
+
+#  Varables for host babyblue03
+
+networking:
+
+    interface_name: end0
+
+shared_storage:
+
+    physical_device: /dev/sda1
+
+    volume_group:    vg.sda1
+    logical_volume:  lv1.share
+    lv_device:       /dev/mapper/vg.sda1-lv1.share
+    lv_mount_point:  /mnt/shared_storage
+    lv_size:         512G
+
+secure_storage:
+
+    usb_key_device:  /dev/sdc1
+    usb_mount_point: /mnt/usbkey
+    encryption_key:  /mnt/usbkey/.crypt_dir/.babyblue_key
+
+    volume_group:    vg.sda1
+    logical_volume:  lv2.secure
+    lv_device:       /dev/mapper/vg.sda1-lv2.secure
+    lv_size:         256G 
+
+    container_name:        crypt_data
+    container_device:      /dev/mapper/crypt_data
+    container_mount_point: /mnt/secure_storage
+
+...
