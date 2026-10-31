@@ -32,7 +32,7 @@
         mode: u=rwx,g=rw,o=rw
 
     - name: Build the desired version of Postgres
-      ansible.builtin.command: "pgenv build 15.8"
+      ansible.builtin.command: "pgenv build {{ VERSION }}"
       environment:
         PATH: .pgenv/bin:{{ ansible_env.PATH }}
       args:

@@ -9,6 +9,27 @@ install-docker: ## Install Docker (standalone server)
 
 #-------------------------------------------------------------------------------
 
+.PHONY: standard-ids 
+standard-ids: ## Create my standard group and user IDs
+	sudo ansible-playbook playbooks/std_ids_groups.yaml -e HOSTS=${hosts}
+	sudo ansible-playbook playbooks/std_ids_users.yaml -e HOSTS=${hosts}
+	sudo ansible-playbook playbooks/std_privs.yaml -e HOSTS=${hosts}
+
+#-------------------------------------------------------------------------------
+
+
+.PHONY: standard-privs 
+standard-privs: ## Assign the standard privilages to user IDs 
+	sudo ansible-playbook playbooks/std_privs.yaml -e HOSTS=${hosts}
+
+#-------------------------------------------------------------------------------
+
+.PHONY: install-pgenv
+install-pgenv: ## Install the pgenv environment and postgress
+	sudo ansible-playbook playbooks/install_pgenv.yaml -e HOSTS=${hosts} -e VERSION=${version}
+
+#-------------------------------------------------------------------------------
+
 lint: ## Run ruff to lint the code
 	uv run ruff format
 	uv run mypy src/
@@ -31,7 +52,6 @@ integration-test: ## Run the integration test
 	uv run pytest \
 	tests/unit tests/integration
 
---------------------: ## ----------------------------------
 
 .PHONY: build-image
 build-image: ## Build the Docker image
