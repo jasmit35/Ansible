@@ -2,8 +2,8 @@
 #  Environment varables for the Makefile in the Ansible project
 #
 
-#  hosts = 'enki'
-hosts = 'meraki'
+hosts = 'enki'
+#  hosts = 'meraki'
 #  hosts = 'prod_swarm'
 
 version = '17.11'

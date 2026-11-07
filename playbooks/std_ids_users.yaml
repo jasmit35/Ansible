@@ -3,7 +3,8 @@
 - name: Configure userids the way I like
   become: true
   gather_facts: false
-  hosts: '{{ HOSTS }}'
+  #  hosts: '{{ HOSTS }}'
+  hosts: enki 
 
   tasks:
 
@@ -31,17 +32,17 @@
         ssh_key_bits: 4096
         ssh_key_file: .ssh/{{ ansible_host }}_rsa
 
-    - name: Ensure 'jeff' exists
-      ansible.builtin.user:
-        name: jeff
-        group: jeff
-        comment: standard userid maintained by Ansible
-        state: present
-        shell: /bin/bash
-        uid: 10000
-        generate_ssh_key: true
-        ssh_key_bits: 4096
-        ssh_key_file: .ssh/{{ ansible_host }}_rsa
+    #  - name: Ensure 'jeff' exists
+    #    ansible.builtin.user:
+    #      name: jeff
+    #      group: jeff
+    #      comment: standard userid maintained by Ansible
+    #      state: present
+    #      shell: /bin/bash
+    #      uid: 10000
+    #      generate_ssh_key: true
+    #      ssh_key_bits: 4096
+    #      ssh_key_file: .ssh/{{ ansible_host }}_rsa
 
     - name: Ensure 'appowner' exists
       ansible.builtin.user:
@@ -50,10 +51,10 @@
         comment: standard userid maintained by Ansible
         state: present
         shell: /bin/bash
-        uid: 20001
-        generate_ssh_key: true
-        ssh_key_bits: 4096
-        ssh_key_file: .ssh/{{ ansible_host }}_rsa
+    #    uid: 20001
+    #      generate_ssh_key: true
+    #      ssh_key_bits: 4096
+    #      ssh_key_file: .ssh/{{ ansible_host }}_rsa
 
     - name: Ensure 'appuser' exists
       ansible.builtin.user:
